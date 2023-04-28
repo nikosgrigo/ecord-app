@@ -1,0 +1,52 @@
+:root {
+  --primary-color: white;
+  --secondary-color: #1a936f;
+  --text-color: white;
+  --hover-color: #448f79;
+}
+
+#logo {
+  width: 150px;
+}
+
+#body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: "Nunito", sans-serif;
+}
+
+.right_section {
+  background-color: var(--primary-color);
+}
+
+.left_section {
+  /* background-image: red
+    url("https://trianglify.io/p/w:770!h:480!x:114b5f.c6dabf.56c16c!v:0.626!c:0.131!s:xanqwm!f:il!i:0.036");
+  background-repeat: no-repeat;
+  background-position: center;
+  position: relative; */
+  background: var(--secondary-color);
+  color: var(--text-color);
+
+  position: relative;
+}
+
+#submit_button {
+  background-color: var(--secondary-color);
+  border: 1px solid var(--primary-color);
+  padding: 10px 55px;
+  justify-self: center;
+}
+
+#submit_button:hover {
+  background-color: var(--hover-color);
+}
+
+.icon {
+  margin-left: 10px;
+}
+
+#header {
+  font-size: 40px;
+}

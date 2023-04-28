@@ -1,0 +1,15 @@
+{
+  "name": "ecord",
+  "version": "1.0.0",
+  "description": "finance app",
+  "main": "index.html",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "Front-End-Projects"
+  },
+  "author": "Nikos Grigorioy",
+  "license": "MIT"
+}
