@@ -1,0 +1,121 @@
+.info_tab {
+  width: 240px;
+  height: 120px;
+  border-radius: 9px;
+  color: white;
+  font-size: 15px;
+  /* margin-left: 40px; */
+  padding: 20px 20px;
+  position: relative;
+}
+
+.info_tab h2 {
+  margin-left: 10px;
+  font-size: 30px;
+}
+
+.tab_description {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+
+i {
+  color: rgb(0, 0, 0);
+  font-size: 20px;
+}
+
+#body {
+  display: flex;
+  flex-direction: row;
+  font-family: "Nunito", sans-serif;
+  position: relative;
+  background-color: #ffffff;
+}
+
+header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-top: 70px;
+}
+
+.budget {
+  font-size: 30px;
+  margin-top: 30px;
+}
+
+#income_tab {
+  background-image: linear-gradient(
+    to left top,
+    rgb(21, 182, 72),
+    rgb(6, 124, 16)
+  );
+}
+
+#outcome_tab {
+  background-image: linear-gradient(
+    to left top,
+    rgb(229, 30, 60),
+    rgb(247, 246, 243)
+  );
+}
+
+#savings_tab {
+  background-image: linear-gradient(
+    to left top,
+    rgb(230, 255, 3),
+    rgb(124, 122, 111)
+  );
+}
+
+.movements_list {
+  display: flex;
+  flex-direction: column;
+  /* background-color: aqua; */
+  width: 700px;
+}
+
+.movement {
+  background-color: rgb(255, 255, 255);
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  height: 70px;
+  border: 1px solid rgb(213, 213, 213);
+  border-radius: 10px;
+  padding: 35px 35px;
+  margin-top: 5px;
+}
+
+.add_new {
+  color: white;
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  font-size: 30px;
+}
+
+.add_new:hover {
+  transform: rotate(90deg);
+}
+
+.info_tab i {
+  color: white;
+}
+
+#user_profile {
+  position: absolute;
+  left: 30px;
+  top: 20px;
+  font-size: 30px;
+  color: rgb(97, 89, 89);
+}
+
+.notifications {
+  color: rgb(97, 89, 89);
+}
+
+/*------MODAL---------*/

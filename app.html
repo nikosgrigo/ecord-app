@@ -4,7 +4,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Ecord App - First Finance for personal use</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="app.css" />
 
     <!--Bootstrap CSS-->
     <link
@@ -13,100 +13,161 @@
       integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ"
       crossorigin="anonymous"
     />
-  </head>
-  <body>
-    <div
-      class="dashboard d-flex flex-column flex-shrink-0 p-3 bg-body-tertiary"
-      style="width: 280px"
-    >
-      <a
-        href="/"
-        class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none"
-      >
-    
-        <img id="website_logo" class="bi pe-none me-2" src="images/ecord-logo-light-mode.svg">
-          <!-- <use xlink:href="#bootstrap"></use> -->
-  </img>
-        <!-- <span class="fs-4">Logo</span> -->
-      </a>
-      <hr />
 
-      <ul class="nav nav-pills flex-column mb-auto">
-        <li class="nav-item">
-          <a href="#" class="nav-link active" aria-current="page">
-            <!--  ICON
-                 <svg class="bi pe-none me-2" width="16" height="16">
-              <use xlink:href="#home"></use>
-            </svg> -->
-            Home
-          </a>
-        </li>
-        <li>
-          <a href="#" class="nav-link link-body-emphasis">
-            <svg class="bi pe-none me-2" width="16" height="16">
-              <use xlink:href="#speedometer2"></use>
-            </svg>
-            Dashboard
-          </a>
-        </li>
-        <li>
-          <a href="#" class="nav-link link-body-emphasis">
-            <svg class="bi pe-none me-2" width="16" height="16">
-              <use xlink:href="#table"></use>
-            </svg>
-            Orders
-          </a>
-        </li>
-        <li>
-          <a href="#" class="nav-link link-body-emphasis">
-            <svg class="bi pe-none me-2" width="16" height="16">
-              <use xlink:href="#grid"></use>
-            </svg>
-            Products
-          </a>
-        </li>
-        <li>
-          <a href="#" class="nav-link link-body-emphasis">
-            <svg class="bi pe-none me-2" width="16" height="16">
-              <use xlink:href="#people-circle"></use>
-            </svg>
-            Customers
-          </a>
-        </li>
-      </ul>
-      <hr />
-      <!-- <div class="dropdown">
-        <a
-          href="#"
-          class="d-flex align-items-center link-body-emphasis text-decoration-none dropdown-toggle"
-          data-bs-toggle="dropdown"
-          aria-expanded="false"
-        >
-          <img
-            src="https://github.com/mdo.png"
-            alt=""
-            width="32"
-            height="32"
-            class="rounded-circle me-2"
-          />
-          <strong>mdo</strong>
-        </a>
-        <ul class="dropdown-menu text-small shadow">
-          <li><a class="dropdown-item" href="#">New project...</a></li>
-          <li><a class="dropdown-item" href="#">Settings</a></li>
-          <li><a class="dropdown-item" href="#">Profile</a></li>
-          <li><hr class="dropdown-divider" /></li>
-          <li><a class="dropdown-item" href="#">Sign out</a></li>
-        </ul>
-      </div> -->
+    <!--Bootstrap Icons-->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css"
+    />
+
+    <!--Google Fonts-->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Nunito:wght@200;400;500;600&family=Quicksand:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body id="body">
+    <i class="bi bi-person-circle" id="user_profile"></i>
+    <div class="container">
+      <div class="row">
+        <div class="dashboard col-lg-2 vh-100"></div>
+        <div class="main_app col-lg-10">
+          <main class="app">
+            <div class="budget">Monthly Budget: 700 &euro;</div>
+            <div class="welcome_user">Welcome back Nikos!</div>
+
+            <header>
+              <div class="info_tab" id="income_tab">
+                <h2>Income</h2>
+                <i
+                  class="bi bi-plus-circle-dotted add_new"
+                  id="change_income"
+                ></i>
+                <div class="tab_description">
+                  <div class="amount">200 &euro;</div>
+                  <i class="bi bi-wallet2"></i>
+                </div>
+              </div>
+
+              <div class="info_tab" id="outcome_tab">
+                <h2>Outcome</h2>
+                <i
+                  class="bi bi-plus-circle-dotted add_new"
+                  id="change_outcome"
+                ></i>
+                <div class="tab_description">
+                  <div class="text-center amount">400 &euro;</div>
+                  <i class="bi bi-wallet2"></i>
+                </div>
+              </div>
+
+              <div class="info_tab" id="savings_tab">
+                <h2>Savings</h2>
+                <div class="tab_description">
+                  <div class="text-center amount">100 &euro;</div>
+                  <i class="bi bi-wallet2"></i>
+                </div>
+              </div>
+            </header>
+
+            <hr />
+            <div class="row">
+              <div class="col-lg-9">
+                <section class="movements_list">
+                  <div class="movement">
+                    <i class="bi bi-bag-fill"></i>
+                    <div class="movement_type">Shopping</div>
+                    <div class="price">20 &euro;</div>
+                    <div class="movement_date">19/09/23</div>
+                  </div>
+
+                  <div class="movement">
+                    <i class="bi bi-bag-fill"></i>
+                    <div class="movement_type">Health</div>
+                    <div class="price">50 &euro;</div>
+                    <div class="movement_date">19/09/23</div>
+                  </div>
+
+                  <div class="movement">
+                    <i class="bi bi-bag-fill"></i>
+                    <div class="movement_type">Grocery</div>
+                    <div class="price">100 &euro;</div>
+                    <div class="movement_date">19/09/23</div>
+                  </div>
+
+                  <div class="movement">
+                    <i class="bi bi-bag-fill"></i>
+                    <div class="movement_type">Partyig</div>
+                    <div class="price">20 &euro;</div>
+                    <div class="movement_date">19/09/23</div>
+                  </div>
+                </section>
+              </div>
+              <div class="col-lg-3">
+                <section class="notifications">
+                  <h2>Notifications</h2>
+                  <hr />
+                  <p>
+                    Lorem ipsum dolor, sit amet consectetur adipisicing elit.
+                    Eaque magni, magnam tenetur laudantium impedit labore
+                    necessitatibus eos id natus incidunt iure beatae sed
+                    nesciunt quos atque aperiam explicabo aut quasi.
+                  </p>
+                </section>
+              </div>
+            </div>
+          </main>
+        </div>
+      </div>
     </div>
 
-
+    <div class="modal">
+      <h1>Add new income source</h1>
+      <form>
+        <!--Insert Type -->
+        <div class="dropdown">
+          <button
+            class="btn btn-secondary dropdown-toggle"
+            type="button"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+          >
+            Select type
+          </button>
+          <ul class="dropdown-menu">
+            <li>
+              <a class="dropdown-item active" href="#" value="shopping"
+                >Shopping</a
+              >
+            </li>
+            <li>
+              <a class="dropdown-item" href="#" value="health">Health</a>
+            </li>
+            <li>
+              <a class="dropdown-item" href="#" value="grocery">Grocery</a>
+            </li>
+            <li>
+              <a class="dropdown-item" href="#" value="hangout">Hang-Out</a>
+            </li>
+            <li>
+              <a class="dropdown-item" href="#" value="travel">Travel</a>
+            </li>
+            <li>
+              <a class="dropdown-item" href="#" value="bills">Bills</a>
+            </li>
+          </ul>
+        </div>
+        <!--Insert Price  -->
+        <label for="money" class="form-label">Insert price</label>
+        <input class="form-control" id="money" type="text" />
+      </form>
+    </div>
     <!--Bootstrap JS-->
     <script
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
       integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe"
       crossorigin="anonymous"
     ></script>
+    <script src="script.js"></script>
   </body>
 </html>

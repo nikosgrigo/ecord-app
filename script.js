@@ -1,7 +1,8 @@
-const form = document.querySelector(".form");
-console.log(form);
+"use strict";
 
-form.addEventListener("submit", function (e) {
-  e.preventDefault();
-  console.log("OK");
-});
+const modal = document.querySelector(".modal");
+// const overlay = document.querySelector(".overlay");
+const btnCloseModal = document.querySelector(".close-modal");
+const btnAddNewSourceOfIncome = document.querySelector("#change_income");
+
+btnAddNewSourceOfIncome.addEventListener("click", function () {});
