@@ -45,10 +45,12 @@ form.addEventListener("submit", function (event) {
     (acc) => acc.email === emailInputValue.toLocaleLowerCase().trim()
   );
   console.log(currentAccount);
+  // localStorage.setItem("user", JSON.stringify(currentAccount));
 
   if (currentAccount?.pin === Number(passwordInputValue) && terms.checked) {
     console.log("Loged IN");
     window.location = "app.html";
+
     // Clear input fields
     inputLoginUsername.value = inputLoginPin.value = "";
   }

@@ -20,9 +20,8 @@
   justify-content: space-around;
 }
 
-i {
-  color: rgb(0, 0, 0);
-  font-size: 20px;
+.tab_description i {
+  font-size: 25px;
 }
 
 #body {
@@ -40,39 +39,40 @@ header {
   margin-top: 70px;
 }
 
-.budget {
-  font-size: 30px;
+.welcome_user {
   margin-top: 30px;
 }
 
+.budget {
+  font-size: 30px;
+}
+
 #income_tab {
-  background-image: linear-gradient(
-    to left top,
-    rgb(21, 182, 72),
-    rgb(6, 124, 16)
-  );
+  /* background: rgb(114, 81, 198);
+  background: linear-gradient(
+    139deg,
+    rgba(114, 81, 198, 1) 0%,
+    rgba(50, 176, 74, 1) 39%
+  ); */
+  background-color: #1a936f;
 }
 
 #outcome_tab {
-  background-image: linear-gradient(
-    to left top,
-    rgb(229, 30, 60),
-    rgb(247, 246, 243)
-  );
+  background-color: #d21941;
 }
 
 #savings_tab {
-  background-image: linear-gradient(
-    to left top,
-    rgb(230, 255, 3),
-    rgb(124, 122, 111)
-  );
+  background-color: #1b62dd;
+}
+
+.amount {
+  font-size: 20px;
 }
 
 .movements_list {
   display: flex;
   flex-direction: column;
-  /* background-color: aqua; */
+  font-weight: 500;
   width: 700px;
 }
 
@@ -88,6 +88,17 @@ header {
   border-radius: 10px;
   padding: 35px 35px;
   margin-top: 5px;
+}
+
+.circle-icon {
+  display: inline-block;
+  width: 35px; /* adjust this to your preferred size */
+  height: 35px; /* adjust this to your preferred size */
+  border-radius: 50%; /* this will create the circular shape */
+  border: 1px solid rgb(0, 255, 140);
+  color: rgb(0, 255, 110);
+  text-align: center;
+  line-height: 35px; /* adjust this to center the text vertically */
 }
 
 .add_new {
@@ -116,6 +127,31 @@ header {
 
 .notifications {
   color: rgb(97, 89, 89);
+}
+
+#new_plan_btn {
+  background-color: #1a936f;
+  padding: 3px 20px;
+  border: none;
+  width: 150px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#new_plan_btn:hover {
+  background-color: #448f79;
+}
+
+#new_plan_btn i {
+  margin-left: 10px;
+  color: white;
+  /* align-self: last baseline; */
+  margin-top: 2px;
+}
+
+.horizontal-line {
+  border-top: 2px solid #126d52;
 }
 
 /*------MODAL---------*/
