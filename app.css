@@ -4,7 +4,6 @@
   border-radius: 9px;
   color: white;
   font-size: 15px;
-  /* margin-left: 40px; */
   padding: 20px 20px;
   position: relative;
 }
@@ -48,12 +47,6 @@ header {
 }
 
 #income_tab {
-  /* background: rgb(114, 81, 198);
-  background: linear-gradient(
-    139deg,
-    rgba(114, 81, 198, 1) 0%,
-    rgba(50, 176, 74, 1) 39%
-  ); */
   background-color: #1a936f;
 }
 
@@ -78,13 +71,15 @@ header {
 
 .movement {
   background-color: rgb(255, 255, 255);
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px,
+    rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
   width: 100%;
   display: flex;
   flex-direction: row;
   justify-content: space-around;
   align-items: center;
   height: 70px;
-  border: 1px solid rgb(213, 213, 213);
+  border: 2px solid rgb(213, 213, 213);
   border-radius: 10px;
   padding: 35px 35px;
   margin-top: 5px;
@@ -95,8 +90,8 @@ header {
   width: 35px; /* adjust this to your preferred size */
   height: 35px; /* adjust this to your preferred size */
   border-radius: 50%; /* this will create the circular shape */
-  border: 1px solid rgb(0, 255, 140);
-  color: rgb(0, 255, 110);
+  border: 1px solid rgb(23, 117, 74);
+  color: rgb(25, 88, 52);
   text-align: center;
   line-height: 35px; /* adjust this to center the text vertically */
 }
@@ -131,7 +126,7 @@ header {
 
 #new_plan_btn {
   background-color: #1a936f;
-  padding: 3px 20px;
+  padding: 5px 20px;
   border: none;
   width: 150px;
   display: flex;
@@ -146,12 +141,27 @@ header {
 #new_plan_btn i {
   margin-left: 10px;
   color: white;
-  /* align-self: last baseline; */
   margin-top: 2px;
 }
 
 .horizontal-line {
   border-top: 2px solid #126d52;
+  margin-top: 30px;
 }
 
-/*------MODAL---------*/
+.empty-list {
+  color: grey;
+  font-size: 20px;
+  font-weight: 500;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.empty-list p {
+  margin-top: 100px;
+}
+
+/* .hidden {
+  display: none;
+} */

@@ -113,21 +113,29 @@
                 <i
                   class="bi bi-plus-circle-dotted add_new"
                   id="change_income"
+                  data-bs-toggle="modal"
+                  data-bs-target="#add_income_source"
                 ></i>
                 <div class="tab_description">
-                  <div class="amount">200 &euro;</div>
+                  <div class="amount">
+                    <span id="income_value">200</span> &euro;
+                  </div>
                   <i class="bi bi-wallet2"></i>
                 </div>
               </div>
 
               <div class="info_tab" id="outcome_tab">
-                <h2>Outcome</h2>
+                <h2>Expenses</h2>
                 <i
                   class="bi bi-plus-circle-dotted add_new"
                   id="change_outcome"
+                  data-bs-toggle="modal"
+                  data-bs-target="#add_expense"
                 ></i>
                 <div class="tab_description">
-                  <div class="text-center amount">400 &euro;</div>
+                  <div class="text-center amount">
+                    <span id="expenses_value">400</span> &euro;
+                  </div>
                   <i class="bi bi-bag-x"></i>
                 </div>
               </div>
@@ -135,7 +143,9 @@
               <div class="info_tab" id="savings_tab">
                 <h2>Savings</h2>
                 <div class="tab_description">
-                  <div class="text-center amount">100 &euro;</div>
+                  <div class="text-center amount">
+                    <span id="savings_value">100</span> &euro;
+                  </div>
                   <i class="bi bi-piggy-bank"></i>
                 </div>
               </div>
@@ -192,51 +202,141 @@
       </div>
     </div>
 
-    <div class="modal">
-      <h1>Add new income source</h1>
-      <form>
-        <!--Insert Type -->
-        <div class="dropdown">
-          <button
-            class="btn btn-secondary dropdown-toggle"
-            type="button"
-            data-bs-toggle="dropdown"
-            aria-expanded="false"
-          >
-            Select type
-          </button>
-          <ul class="dropdown-menu">
-            <li>
-              <a class="dropdown-item active" href="#" value="shopping"
-                >Shopping</a
-              >
-            </li>
-            <li>
-              <a class="dropdown-item" href="#" value="health">Health</a>
-            </li>
-            <li>
-              <a class="dropdown-item" href="#" value="grocery">Grocery</a>
-            </li>
-            <li>
-              <a class="dropdown-item" href="#" value="hangout">Hang-Out</a>
-            </li>
-            <li>
-              <a class="dropdown-item" href="#" value="travel">Travel</a>
-            </li>
-            <li>
-              <a class="dropdown-item" href="#" value="bills">Bills</a>
-            </li>
-          </ul>
+    <div
+      class="modal fade"
+      id="add_income_source"
+      data-bs-backdrop="static"
+      data-bs-keyboard="false"
+      tabindex="-1"
+      aria-labelledby="staticBackdropLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="staticBackdropLabel">
+              Add income source
+            </h1>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <label for="income_input" class="form-label">Price</label>
+            <input class="form-control w-50" id="income_input" type="text" />
+
+            <label for="income_description" class="form-label mt-3"
+              >Mini description</label
+            >
+
+            <textarea
+              class="form-control"
+              id="income_description"
+              rows="3"
+            ></textarea>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >
+              Close
+            </button>
+            <button id="btn_reset_plan" type="button" class="btn btn-primary">
+              Apply
+            </button>
+          </div>
         </div>
-        <!--Insert Price  -->
-        <label for="money" class="form-label">Insert price</label>
-        <input class="form-control" id="money" type="text" />
-      </form>
+      </div>
     </div>
-
-    <!-- Button trigger modal -->
-
-    <!-- Modal -->
+    <div
+      class="modal fade"
+      id="add_expense"
+      data-bs-backdrop="static"
+      data-bs-keyboard="false"
+      tabindex="-1"
+      aria-labelledby="staticBackdropLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="staticBackdropLabel">
+              Add expense
+            </h1>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <label for="monthly_budget" class="form-label"
+              >Monthly Budget</label
+            >
+            <form>
+              <!--Insert Type -->
+              <div class="dropdown">
+                <button
+                  class="btn btn-secondary dropdown-toggle"
+                  type="button"
+                  data-bs-toggle="dropdown"
+                  aria-expanded="false"
+                >
+                  Select category
+                </button>
+                <ul class="dropdown-menu mt-3">
+                  <li>
+                    <a class="dropdown-item active" href="#" value="shopping"
+                      >Shopping</a
+                    >
+                  </li>
+                  <li>
+                    <a class="dropdown-item" href="#" value="health">Health</a>
+                  </li>
+                  <li>
+                    <a class="dropdown-item" href="#" value="grocery"
+                      >Grocery</a
+                    >
+                  </li>
+                  <li>
+                    <a class="dropdown-item" href="#" value="hangout"
+                      >Hang-Out</a
+                    >
+                  </li>
+                  <li>
+                    <a class="dropdown-item" href="#" value="travel">Travel</a>
+                  </li>
+                  <li>
+                    <a class="dropdown-item" href="#" value="bills">Bills</a>
+                  </li>
+                </ul>
+              </div>
+              <!--Insert Price  -->
+              <label for="money" class="form-label mt-3">Insert price</label>
+              <input class="form-control w-50" id="money" type="text" />
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >
+              Close
+            </button>
+            <button id="btn_reset_plan" type="button" class="btn btn-primary">
+              Apply
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
 
     <!--Bootstrap JS-->
     <script
