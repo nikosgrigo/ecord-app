@@ -15,8 +15,17 @@ const user = {
 // console.log(usern);
 
 const monthlyBudgetInput = document.getElementById("monthly_budget");
+
+//Get modal buttons
 const btnResetBudget = document.getElementById("btn_reset_plan");
+const btnAddNewSourceOfIncome = document.getElementById(
+  "btn_add_new_source_of_income"
+);
+
+//Get modals
+const addNewIncomeModal = document.getElementById("add_income_source");
 let modalNewMonthPlan = document.getElementById("add_new_plan");
+const modalNewExpense = document.querySelector("#add_expense");
 
 //UI elements for displaying prices
 const monthlyBudgetSpan = document.getElementById("monthly_budget_amount");
@@ -34,7 +43,7 @@ const calculateDisplayAllExpenses = function () {
   const totalExpenses = user.expenses.reduce((acc, cur) => acc + cur);
   expenseSpan.textContent = totalExpenses;
 
-  console.log(totalExpenses);
+  // console.log(totalExpenses);
   return totalExpenses;
 };
 
@@ -45,7 +54,7 @@ const calculateDisplayAllIncomeSources = function () {
   const totalIncome = user.income.reduce((acc, cur) => acc + cur);
   incomeSpan.textContent = totalIncome;
 
-  console.log(totalIncome);
+  // console.log(totalIncome);
   return totalIncome;
 };
 
@@ -104,7 +113,8 @@ const initApp = function () {
 const changeMonthlyBudgetforUser = function (user, budget) {
   //Change object to store data about his budget
   user.budget = budget;
-  console.log(user);
+  // console.log(user);
+
   //Dislpay budget in UI
   monthlyBudgetSpan.textContent = budget;
 
@@ -118,9 +128,35 @@ const hideModal = function (modal) {
   modal.hide();
 };
 
+const displayNewMovementUI = function (type, movementObject) {
+  const currentDate = new Date().toLocaleDateString("en-GB");
+
+  if (type === "income") {
+    const html = `<div class="movement show">
+    <i class="bi bi-patch-plus-fill circle-icon"></i>
+  <div class="movement_type">${movementObject.description}</div>
+  <div class="price">${movementObject.amount} &euro;</div>
+  <div class="movement_date">${currentDate}</div>
+</div>`;
+    movementsListDiv.insertAdjacentHTML("beforeend", html);
+    //
+  } else if (type === "expense") {
+    const html = `<div class="movement show">
+    <i class="bi bi-patch-minus-fill circle-icon"></i>
+  <div class="movement_type">${movementObject.category}</div>
+  <div class="price">${movementObject.amount} &euro;</div>
+  <div class="movement_date">${currentDate}</div>
+</div>`;
+    console.log("ok");
+    movementsListDiv.insertAdjacentHTML("beforeend", html);
+  }
+};
+
+//Event Listener for modals
+
 btnResetBudget.addEventListener("click", function () {
   const budget = Number(monthlyBudgetInput.value);
-  console.log(budget);
+  // console.log(budget);
 
   //if input is a number then get data and remove modal
   if (budget) {
@@ -128,5 +164,67 @@ btnResetBudget.addEventListener("click", function () {
     changeMonthlyBudgetforUser(user, budget);
   } else {
     console.log("Display error message");
+  }
+});
+
+const inputAmountElement = document.querySelector("#income_input");
+const textareaInputElement = document.querySelector("#income_description");
+
+btnAddNewSourceOfIncome.addEventListener("click", function () {
+  const amount = Number(inputAmountElement.value);
+  // console.log(amount);
+  const incomeDescription = String(textareaInputElement.value).trim();
+  // console.log(incomeDescription);
+
+  if (amount && incomeDescription !== "") {
+    hideModal(addNewIncomeModal);
+    const newIncomeObject = {
+      amount: amount,
+      description: incomeDescription,
+    };
+
+    // console.log(newIncomeObject);
+    user.income.push(newIncomeObject);
+    displayNewMovementUI("income", newIncomeObject);
+    // console.log(user.income);
+  }
+});
+
+// const getSelectedValueFromDropdownList = function () {
+
+// };
+/*---------------- */
+
+const btnAddNewExpense = document.querySelector("#btn_add_new_expense");
+const inputAmountExpense = document.querySelector("#expense_amount");
+// const modalNewExpense = document.querySelector("#add_expense");
+
+btnAddNewExpense.addEventListener("click", function () {
+  const amount = Number(inputAmountExpense.value);
+  console.log(amount);
+  // const expenseType = String(textareaInputElement.value).trim();
+  // console.log(incomeDescription);
+
+  // const selectedType = getSelectedValueFromDropdownList();
+  // console.log(selectedType);
+  const selectedType = "grocery";
+  // const dropdownMenuLinks = document.querySelectorAll(
+  //   ".dropdown-menu .dropdown-item "
+  // );
+  // dropdownMenuLinks.forEach((link) => {
+  //   link.addEventListener("click", function (event) {
+  //     event.preventDefault();
+  //     selectedType = this.getAttribute("value");
+  //   });
+  // });
+
+  if (amount && selectedType) {
+    hideModal(modalNewExpense);
+    const newExpenseObject = {
+      amount: -Math.abs(amount),
+      category: selectedType,
+    };
+    user.expenses.push(newExpenseObject);
+    displayNewMovementUI("expense", newExpenseObject);
   }
 });

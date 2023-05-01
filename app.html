@@ -4,7 +4,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Ecord App - First Finance for personal use</title>
-    <link rel="stylesheet" href="app.css" />
+    <link rel="stylesheet" href="/styles/app.css" />
 
     <!--Bootstrap CSS-->
     <link
@@ -155,14 +155,14 @@
             <div class="row">
               <div class="col-lg-9">
                 <section class="movements_list">
-                  <div class="movement">
+                  <div class="movement show">
                     <i class="bi bi-bag-fill circle-icon"></i>
                     <div class="movement_type">Shopping</div>
                     <div class="price">20 &euro;</div>
                     <div class="movement_date">19/09/23</div>
                   </div>
 
-                  <div class="movement">
+                  <!-- <div class="movement">
                     <i class="bi bi-bag-fill circle-icon"></i>
                     <div class="movement_type">Health</div>
                     <div class="price">50 &euro;</div>
@@ -181,7 +181,7 @@
                     <div class="movement_type">Partyig</div>
                     <div class="price">20 &euro;</div>
                     <div class="movement_date">19/09/23</div>
-                  </div>
+                  </div> -->
                 </section>
               </div>
               <div class="col-lg-3">
@@ -229,13 +229,13 @@
             <input class="form-control w-50" id="income_input" type="text" />
 
             <label for="income_description" class="form-label mt-3"
-              >Mini description</label
+              >Mini description (3 keywords)</label
             >
 
             <textarea
-              class="form-control"
+              class="form-control w-50"
               id="income_description"
-              rows="3"
+              rows="2"
             ></textarea>
           </div>
           <div class="modal-footer">
@@ -246,7 +246,11 @@
             >
               Close
             </button>
-            <button id="btn_reset_plan" type="button" class="btn btn-primary">
+            <button
+              id="btn_add_new_source_of_income"
+              type="button"
+              class="btn btn-primary"
+            >
               Apply
             </button>
           </div>
@@ -318,8 +322,14 @@
                 </ul>
               </div>
               <!--Insert Price  -->
-              <label for="money" class="form-label mt-3">Insert price</label>
-              <input class="form-control w-50" id="money" type="text" />
+              <label for="expense_amount" class="form-label mt-3"
+                >Insert price</label
+              >
+              <input
+                class="form-control w-50"
+                id="expense_amount"
+                type="text"
+              />
             </form>
           </div>
           <div class="modal-footer">
@@ -330,7 +340,11 @@
             >
               Close
             </button>
-            <button id="btn_reset_plan" type="button" class="btn btn-primary">
+            <button
+              id="btn_add_new_expense"
+              type="button"
+              class="btn btn-primary"
+            >
               Apply
             </button>
           </div>
