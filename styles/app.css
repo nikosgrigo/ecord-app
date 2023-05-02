@@ -35,7 +35,7 @@ header {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  margin-top: 70px;
+  margin-top: 40px;
 }
 
 .welcome_user {
@@ -67,6 +67,9 @@ header {
   flex-direction: column;
   font-weight: 500;
   width: 700px;
+
+  height: 330px; /* set a fixed height */
+  overflow-y: scroll; /* enable vertical scrolling */
 }
 
 .movement {
@@ -94,6 +97,12 @@ header {
 
 .circle-icon {
   font-size: 25px;
+}
+
+.movement_type,
+.price,
+.movement_date {
+  width: 100px;
 }
 
 .add_new {
@@ -158,8 +167,9 @@ header {
   align-items: center;
 }
 
-.empty-list p {
-  margin-top: 100px;
+.bi-binoculars-fill {
+  color: #126d52;
+  font-size: 45px;
 }
 
 .bi-patch-minus-fill {
@@ -169,3 +179,5 @@ header {
 .bi-patch-plus-fill {
   color: #126d52;
 }
+
+/*-----------EXTRA--------------*/

@@ -6,8 +6,8 @@ const user = {
   email: "nickosgrigo@gmail.com",
   pin: 1111,
   budget: 700,
-  income: [100, 200, 50], //400
-  expenses: [-100, -200, -30, -70], //-400
+  income: [{ amount: 100 }, { amount: 200 }], //300
+  expenses: [{ amount: -100 }, { amount: -200 }], //-300
   saving: 0,
 };
 
@@ -38,40 +38,41 @@ const savingSpan = document.getElementById("savings_value");
 
 const movementsListDiv = document.querySelector(".movements_list");
 
+document.addEventListener("DOMContentLoaded", function () {
+  console.log("LOADED");
+  calculateDisplayAllExpenses();
+  welcomeUser();
+  calculateDisplayAllIncomeSources();
+  calculateDisplaySavings();
+});
+//////
 const calculateDisplayAllExpenses = function () {
   //Array expenses in user object
-  const totalExpenses = user.expenses.reduce((acc, cur) => acc + cur);
+  const totalExpenses = user.expenses.reduce((acc, cur) => acc + cur.amount, 0);
   expenseSpan.textContent = totalExpenses;
 
-  // console.log(totalExpenses);
+  console.log(totalExpenses);
   return totalExpenses;
 };
 
-calculateDisplayAllExpenses();
-
+///////////
 const calculateDisplayAllIncomeSources = function () {
   //Array income in user object
-  const totalIncome = user.income.reduce((acc, cur) => acc + cur);
+  const totalIncome = user.income.reduce((acc, cur) => acc + cur.amount, 0);
   incomeSpan.textContent = totalIncome;
-
-  // console.log(totalIncome);
   return totalIncome;
 };
-
-calculateDisplayAllIncomeSources();
 
 const calculateDisplaySavings = function () {
   //Income + Balance - Outcome
   //calculate savings
-  const savings =
+  user.saving =
     calculateDisplayAllIncomeSources() +
     user.budget +
     calculateDisplayAllExpenses();
 
-  savingSpan.textContent = savings;
+  savingSpan.textContent = user.saving;
 };
-
-calculateDisplaySavings();
 
 const currentMonthlyBudget = 0;
 
@@ -79,7 +80,6 @@ const currentMonthlyBudget = 0;
 const welcomeUser = function () {
   userEmailSpan.textContent = user.email;
 };
-welcomeUser();
 
 const resetUserObject = function (user) {
   user.income = [];
@@ -100,7 +100,8 @@ const resetUI = function () {
     movementsListDiv.removeChild(movementsListDiv.firstChild);
   }
 
-  const html = "<p>No recent data found!</p>";
+  const html = `<i class="bi bi-binoculars-fill"></i>
+  <p>No recent data found!</p>`;
 
   movementsListDiv.insertAdjacentHTML("beforeend", html);
 };
@@ -128,8 +129,20 @@ const hideModal = function (modal) {
   modal.hide();
 };
 
+const updateUI = function () {
+  calculateDisplaySavings();
+  calculateDisplayAllIncomeSources();
+  calculateDisplayAllExpenses();
+};
+
 const displayNewMovementUI = function (type, movementObject) {
   const currentDate = new Date().toLocaleDateString("en-GB");
+
+  //if is the first movement in the list then remove empty
+  if (movementsListDiv.classList.contains("empty-list")) {
+    movementsListDiv.innerHTML = "";
+    movementsListDiv.classList.remove("empty-list");
+  }
 
   if (type === "income") {
     const html = `<div class="movement show">
@@ -185,6 +198,7 @@ btnAddNewSourceOfIncome.addEventListener("click", function () {
 
     // console.log(newIncomeObject);
     user.income.push(newIncomeObject);
+    updateUI();
     displayNewMovementUI("income", newIncomeObject);
     // console.log(user.income);
   }
@@ -225,6 +239,10 @@ btnAddNewExpense.addEventListener("click", function () {
       category: selectedType,
     };
     user.expenses.push(newExpenseObject);
+    updateUI();
     displayNewMovementUI("expense", newExpenseObject);
   }
 });
+
+//Check if balance is smaller than 50 and send notification to the user
+const checkForSmallBalance = function () {};
