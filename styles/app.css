@@ -67,9 +67,9 @@
   display: flex;
   flex-direction: column;
   font-weight: 500;
-  width: 700px;
+  width: 90%;
 
-  height: 330px; /* set a fixed height */
+  height: 430px; /* set a fixed height */
   overflow-y: scroll; /* enable vertical scrolling */
 }
 

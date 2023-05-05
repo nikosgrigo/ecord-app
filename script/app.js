@@ -1,17 +1,20 @@
 "use strict";
-import { currentAccount } from "./login.js";
+// import { currentEmail } from "./login.js";
 
-console.log(currentAccount); // "John Doe"
-const user = Object.assign(currentAccount);
-console.log(user);
-// const user = {
-//   email: "nickosgrigo@gmail.com",
-//   pin: 1111,
-//   budget: 700,
-//   income: [{ amount: 100 }, { amount: 200 }], //300
-//   expenses: [{ amount: -100 }, { amount: -200 }], //-300
-//   saving: 0,
-// };
+// console.log(currentEmail);
+// "John Doe"
+
+const userEmail = localStorage.getItem("currentEmail");
+// console.log(myStoredString);
+const userDatabase = [];
+
+const user = {
+  email: userEmail,
+  budget: 0,
+  income: [], //300 [{ amount: 100 }, { amount: 200 }],
+  expenses: [], //-300 { amount: -100 }, { amount: -200 }
+  saving: 0,
+};
 
 const monthlyBudgetInput = document.getElementById("monthly_budget");
 
@@ -20,6 +23,7 @@ const btnResetBudget = document.getElementById("btn_reset_plan");
 const btnAddNewSourceOfIncome = document.getElementById(
   "btn_add_new_source_of_income"
 );
+const btnAddNewExpense = document.querySelector("#btn_add_new_expense");
 
 //Get modals
 const addNewIncomeModal = document.getElementById("add_income_source");
@@ -34,21 +38,25 @@ const userEmailSpan = document.getElementById("user_email_span");
 const incomeSpan = document.getElementById("income_value");
 const expenseSpan = document.getElementById("expenses_value");
 const savingSpan = document.getElementById("savings_value");
+const inputAmountExpense = document.querySelector("#expense_amount");
+const selectElement = document.querySelector("#category");
+const inputAmountElement = document.querySelector("#income_input");
+const textareaInputElement = document.querySelector("#income_description");
 
 const movementsListDiv = document.querySelector(".movements_list");
 
-//////
+const notificationSpan = document.getElementById("notification_span");
 
-const DisplayBalance = function () {
-  monthlyBudgetSpan.textContent = user.budget;
-};
+//User buttons for log out and delete account
+const btnLogOut = document.getElementById("logout-btn");
+const btnDeleteAccount = document.getElementById("delete-acoount-btn");
+
+//////
 
 const calculateDisplayAllExpenses = function () {
   //Array expenses in user object
   const totalExpenses = user.expenses.reduce((acc, cur) => acc + cur.amount, 0);
   expenseSpan.textContent = totalExpenses;
-
-  console.log(totalExpenses);
   return totalExpenses;
 };
 
@@ -62,7 +70,7 @@ const calculateDisplayAllIncomeSources = function () {
 
 const calculateDisplaySavings = function () {
   //Income + Balance - Outcome
-  //calculate savings
+  //Calculate savings
   user.saving =
     calculateDisplayAllIncomeSources() +
     user.budget +
@@ -71,25 +79,16 @@ const calculateDisplaySavings = function () {
   savingSpan.textContent = user.saving;
 };
 
-const notificationSpan = document.getElementById("notification_span");
+document.addEventListener("DOMContentLoaded", function () {
+  console.log("LOADED");
+  userEmailSpan.textContent = user.email; //Welcome user
+  monthlyBudgetSpan.textContent = user.budget; //Display user monthly budget
 
-//Check if balance is smaller than 50 and send notification to the user
-const checkForSmallBalance = function () {
-  user.saving < 50
-    ? (notificationSpan.textContent = `📌 You will soon run out of money!`)
-    : (notificationSpan.textContent = `📌 You don't have any notification!`);
-};
-
-const checkForValidExpense = function (currentExpense) {
-  return user.budget > currentExpense ? true : false;
-};
-
-const currentMonthlyBudget = 0;
-
-//current user-object from login page
-const welcomeUser = function () {
-  userEmailSpan.textContent = user.email;
-};
+  calculateDisplayAllExpenses();
+  calculateDisplayAllIncomeSources();
+  calculateDisplaySavings();
+  // checkForSmallBalance();
+});
 
 const resetUserObject = function (user) {
   user.income = [];
@@ -116,11 +115,6 @@ const resetUI = function () {
   movementsListDiv.insertAdjacentHTML("beforeend", html);
 };
 
-const initApp = function () {
-  resetUserObject(user);
-  resetUI();
-};
-
 const changeMonthlyBudgetforUser = function (user, budget) {
   //Change object to store data about his budget
   user.budget = budget;
@@ -130,7 +124,19 @@ const changeMonthlyBudgetforUser = function (user, budget) {
   monthlyBudgetSpan.textContent = budget;
 
   //reset data and UI for a new month
-  initApp();
+  resetUserObject(user);
+  resetUI();
+};
+
+//Check if balance is smaller than 50 and send notification to the user
+const checkForSmallBalance = function () {
+  user.saving < 50
+    ? (notificationSpan.textContent = `📌 You will soon run out of money!`)
+    : (notificationSpan.textContent = `📌 You don't have any notification!`);
+};
+
+const checkForValidExpense = function (currentExpense) {
+  return user.saving - 50 > currentExpense ? true : false;
 };
 
 const hideModal = function (modal) {
@@ -147,7 +153,7 @@ const updateUI = function () {
 
 const displayNewMovementUI = function (type, movementObject) {
   const currentDate = new Date().toLocaleDateString("en-GB");
-  checkForSmallBalance();
+
   //if is the first movement in the list then remove empty
   if (movementsListDiv.classList.contains("empty-list")) {
     movementsListDiv.innerHTML = "";
@@ -176,15 +182,6 @@ const displayNewMovementUI = function (type, movementObject) {
 };
 
 //-----------------Event Listener for modals
-document.addEventListener("DOMContentLoaded", function () {
-  console.log("LOADED");
-  DisplayBalance();
-  calculateDisplayAllExpenses();
-  welcomeUser();
-  calculateDisplayAllIncomeSources();
-  calculateDisplaySavings();
-  checkForSmallBalance();
-});
 
 btnResetBudget.addEventListener("click", function () {
   const budget = Number(monthlyBudgetInput.value);
@@ -198,9 +195,6 @@ btnResetBudget.addEventListener("click", function () {
     console.log("Display error message");
   }
 });
-
-const inputAmountElement = document.querySelector("#income_input");
-const textareaInputElement = document.querySelector("#income_description");
 
 btnAddNewSourceOfIncome.addEventListener("click", function () {
   const amount = Number(inputAmountElement.value);
@@ -223,14 +217,7 @@ btnAddNewSourceOfIncome.addEventListener("click", function () {
   }
 });
 
-// const getSelectedValueFromDropdownList = function () {
-
-// };
 /*---------------- */
-
-const btnAddNewExpense = document.querySelector("#btn_add_new_expense");
-const inputAmountExpense = document.querySelector("#expense_amount");
-const selectElement = document.querySelector("#category");
 
 btnAddNewExpense.addEventListener("click", function () {
   const amount = Number(inputAmountExpense.value);
@@ -247,21 +234,23 @@ btnAddNewExpense.addEventListener("click", function () {
     updateUI();
     displayNewMovementUI("expense", newExpenseObject);
   } else {
-    console.log("The amount is bigger than your balance");
+    notificationSpan.textContent = `📌 You don't have enough money !`;
+
+    setTimeout(
+      (notificationSpan.textContent = `📌 You don't have any notification!`),
+      4000
+    );
+    hideModal(modalNewExpense);
   }
 });
 
-const btnLogOut = document.getElementById("logout-btn");
-
 btnLogOut.addEventListener("click", function (e) {
   e.preventDefault();
-  localStorage.setItem("user", "user");
+  // localStorage.setItem("user", "user");
   // set the new href attribute
   console.log("Loged Out");
   window.location = "login.html";
 });
-
-const btnDeleteAccount = document.getElementById("delete-acoount-btn");
 
 btnDeleteAccount.addEventListener("click", function (e) {
   e.preventDefault();

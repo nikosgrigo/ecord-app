@@ -28,10 +28,11 @@
     />
   </head>
   <body id="body">
+    <div id="alert" class="" role="alert">Something went wrong!</div>
     <div id="wrapper" class="container-fluid">
-      <div class="row">
+      <div class="row vh-100">
         <div
-          class="left_section vh-100 col-lg-6 d-flex flex-column justify-content-center align-items-center"
+          class="left_section col-lg-6 d-flex flex-column justify-content-center align-items-center"
         >
           <img src="images/svg_finance.svg" alt="economic" />
           <h1 class="mt-5 welcome d-block">Welcome Back!</h1>
@@ -42,7 +43,7 @@
           </p>
         </div>
         <div
-          class="right_section vh-100 col-lg-6 d-flex justify-content-center align-items-center"
+          class="right_section col-lg-6 d-flex justify-content-center align-items-center"
         >
           <form class="form px-4 py-5 d-flex flex-column">
             <h1 id="header" class="h3 mb-5 fw-normal text-center">Log in</h1>
@@ -77,8 +78,9 @@
               id="submit_button"
               type="submit"
               class="btn btn-md btn-primary mt-3 d-inline"
+              value="Submit"
             >
-              Submit <i class="bi bi-send-fill icon"></i>
+              Submit<i class="bi bi-send-fill icon"></i>
             </button>
           </form>
         </div>

@@ -1,32 +1,20 @@
 "use strict";
-
-export let currentAccount = {};
-// Data
-const account1 = {
-  email: "nickosgrigo@gmail.com",
-  pin: 1111,
-  //   movements: [200, 450, -400, 3000, -650, -130, 70, 1300],
+// let currentEmail = "";
+// Create a mock database of user credentials
+const userDatabase = {
+  "nickosgrigo@gmail.com": {
+    email: "nickosgrigo@gmail.com",
+    password: "1111",
+  },
+  "user2@example.com": {
+    email: "evizampeka@gmail.com",
+    password: "2222",
+  },
+  // "user3@example.com": {
+  //   email: "user3@example.com",
+  //   password: "password3",
+  // },
 };
-
-const account2 = {
-  email: "evizampeka@gmail.com",
-  pin: 2222,
-  //   movements: [5000, 3400, -150, -790, -3210, -1000, 8500, -30],
-};
-
-const account3 = {
-  email: "pp@gmail.com",
-  pin: 3333,
-  //   movements: [200, -200, 340, -300, -20, 50, 400, -460],
-};
-
-const account4 = {
-  email: "xxxi@gmail.com",
-  pin: 4444,
-  //   movements: [430, 1000, 700, 50, 90],
-};
-
-const accounts = [account1, account2, account3, account4];
 
 const emailInput = document.querySelector("#user_email");
 const passwordInput = document.querySelector("#user_password");
@@ -35,23 +23,33 @@ const terms = document.querySelector("#terms");
 
 form.addEventListener("submit", function (event) {
   event.preventDefault();
-  console.log("OK");
 
   let emailInputValue = emailInput.value;
   let passwordInputValue = passwordInput.value;
-  console.log(emailInputValue);
-  console.log(passwordInputValue);
 
-  currentAccount = accounts.find(
-    (acc) => acc.email === emailInputValue.toLocaleLowerCase().trim()
-  );
-  console.log(currentAccount);
+  // Check the user's credentials against the mock database
+  if (
+    userDatabase[emailInputValue] &&
+    userDatabase[emailInputValue].password === passwordInputValue &&
+    terms.checked
+  ) {
+    // If the credentials are correct, redirect to the main page or give access to protected content
+    let currentEmail = emailInputValue;
 
-  if (currentAccount?.pin === Number(passwordInputValue) && terms.checked) {
-    console.log("Loged IN");
+    localStorage.setItem("currentEmail", currentEmail);
+
     window.location = "app.html";
-
-    // Clear input fields
-    inputLoginUsername.value = inputLoginPin.value = "";
+  } else {
+    // If the credentials are incorrect, display an error message
+    const messageEl = document.querySelector("#alert");
+    messageEl.classList.add("alert-show");
+    setTimeout(() => {
+      messageEl.classList.remove("alert-show");
+    }, 4000); // 5000 milliseconds = 5 seconds
   }
+
+  // Clear input fields
+  inputLoginUsername.value = inputLoginPin.value = "";
 });
+
+// export { currentEmail };

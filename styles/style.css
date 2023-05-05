@@ -14,6 +14,7 @@
   justify-content: center;
   align-items: center;
   font-family: "Nunito", sans-serif;
+  position: relative;
 }
 
 .right_section {
@@ -21,14 +22,8 @@
 }
 
 .left_section {
-  /* background-image: red
-    url("https://trianglify.io/p/w:770!h:480!x:114b5f.c6dabf.56c16c!v:0.626!c:0.131!s:xanqwm!f:il!i:0.036");
-  background-repeat: no-repeat;
-  background-position: center;
-  position: relative; */
   background: var(--secondary-color);
   color: var(--text-color);
-
   position: relative;
 }
 
@@ -49,4 +44,30 @@
 
 #header {
   font-size: 40px;
+}
+
+/*---------*/
+
+#alert {
+  display: block;
+  position: fixed;
+  top: 10%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 3;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+
+  padding: 1rem;
+  width: 80%;
+  max-width: 400px;
+  text-align: center;
+  background-color: #ec3a3ae1;
+  border: 1px solid #e92c35;
+  border-radius: 10px;
+  color: #ffffff;
+}
+
+.alert-show {
+  opacity: 1;
 }
