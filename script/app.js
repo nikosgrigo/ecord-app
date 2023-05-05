@@ -1,18 +1,17 @@
 "use strict";
-// import { currentAccount } from "./login.js";
-// console.log(currentAccount);
+import { currentAccount } from "./login.js";
 
-const user = {
-  email: "nickosgrigo@gmail.com",
-  pin: 1111,
-  budget: 700,
-  income: [{ amount: 100 }, { amount: 200 }], //300
-  expenses: [{ amount: -100 }, { amount: -200 }], //-300
-  saving: 0,
-};
-
-// let usern = JSON.parse(localStorage.getItem("user"));
-// console.log(usern);
+console.log(currentAccount); // "John Doe"
+const user = Object.assign(currentAccount);
+console.log(user);
+// const user = {
+//   email: "nickosgrigo@gmail.com",
+//   pin: 1111,
+//   budget: 700,
+//   income: [{ amount: 100 }, { amount: 200 }], //300
+//   expenses: [{ amount: -100 }, { amount: -200 }], //-300
+//   saving: 0,
+// };
 
 const monthlyBudgetInput = document.getElementById("monthly_budget");
 
@@ -38,14 +37,12 @@ const savingSpan = document.getElementById("savings_value");
 
 const movementsListDiv = document.querySelector(".movements_list");
 
-document.addEventListener("DOMContentLoaded", function () {
-  console.log("LOADED");
-  calculateDisplayAllExpenses();
-  welcomeUser();
-  calculateDisplayAllIncomeSources();
-  calculateDisplaySavings();
-});
 //////
+
+const DisplayBalance = function () {
+  monthlyBudgetSpan.textContent = user.budget;
+};
+
 const calculateDisplayAllExpenses = function () {
   //Array expenses in user object
   const totalExpenses = user.expenses.reduce((acc, cur) => acc + cur.amount, 0);
@@ -72,6 +69,19 @@ const calculateDisplaySavings = function () {
     calculateDisplayAllExpenses();
 
   savingSpan.textContent = user.saving;
+};
+
+const notificationSpan = document.getElementById("notification_span");
+
+//Check if balance is smaller than 50 and send notification to the user
+const checkForSmallBalance = function () {
+  user.saving < 50
+    ? (notificationSpan.textContent = `📌 You will soon run out of money!`)
+    : (notificationSpan.textContent = `📌 You don't have any notification!`);
+};
+
+const checkForValidExpense = function (currentExpense) {
+  return user.budget > currentExpense ? true : false;
 };
 
 const currentMonthlyBudget = 0;
@@ -137,7 +147,7 @@ const updateUI = function () {
 
 const displayNewMovementUI = function (type, movementObject) {
   const currentDate = new Date().toLocaleDateString("en-GB");
-
+  checkForSmallBalance();
   //if is the first movement in the list then remove empty
   if (movementsListDiv.classList.contains("empty-list")) {
     movementsListDiv.innerHTML = "";
@@ -165,7 +175,16 @@ const displayNewMovementUI = function (type, movementObject) {
   }
 };
 
-//Event Listener for modals
+//-----------------Event Listener for modals
+document.addEventListener("DOMContentLoaded", function () {
+  console.log("LOADED");
+  DisplayBalance();
+  calculateDisplayAllExpenses();
+  welcomeUser();
+  calculateDisplayAllIncomeSources();
+  calculateDisplaySavings();
+  checkForSmallBalance();
+});
 
 btnResetBudget.addEventListener("click", function () {
   const budget = Number(monthlyBudgetInput.value);
@@ -211,38 +230,42 @@ btnAddNewSourceOfIncome.addEventListener("click", function () {
 
 const btnAddNewExpense = document.querySelector("#btn_add_new_expense");
 const inputAmountExpense = document.querySelector("#expense_amount");
-// const modalNewExpense = document.querySelector("#add_expense");
+const selectElement = document.querySelector("#category");
 
 btnAddNewExpense.addEventListener("click", function () {
   const amount = Number(inputAmountExpense.value);
-  console.log(amount);
-  // const expenseType = String(textareaInputElement.value).trim();
-  // console.log(incomeDescription);
+  const selectedCategory = selectElement.value;
 
-  // const selectedType = getSelectedValueFromDropdownList();
-  // console.log(selectedType);
-  const selectedType = "grocery";
-  // const dropdownMenuLinks = document.querySelectorAll(
-  //   ".dropdown-menu .dropdown-item "
-  // );
-  // dropdownMenuLinks.forEach((link) => {
-  //   link.addEventListener("click", function (event) {
-  //     event.preventDefault();
-  //     selectedType = this.getAttribute("value");
-  //   });
-  // });
-
-  if (amount && selectedType) {
+  if (amount && checkForValidExpense(amount)) {
     hideModal(modalNewExpense);
     const newExpenseObject = {
       amount: -Math.abs(amount),
-      category: selectedType,
+      category: selectedCategory,
     };
+
     user.expenses.push(newExpenseObject);
     updateUI();
     displayNewMovementUI("expense", newExpenseObject);
+  } else {
+    console.log("The amount is bigger than your balance");
   }
 });
 
-//Check if balance is smaller than 50 and send notification to the user
-const checkForSmallBalance = function () {};
+const btnLogOut = document.getElementById("logout-btn");
+
+btnLogOut.addEventListener("click", function (e) {
+  e.preventDefault();
+  localStorage.setItem("user", "user");
+  // set the new href attribute
+  console.log("Loged Out");
+  window.location = "login.html";
+});
+
+const btnDeleteAccount = document.getElementById("delete-acoount-btn");
+
+btnDeleteAccount.addEventListener("click", function (e) {
+  e.preventDefault();
+  // Remove a value from localStorage
+  localStorage.removeItem("user");
+  setTimeout((window.location = "login.html"), 5000);
+});

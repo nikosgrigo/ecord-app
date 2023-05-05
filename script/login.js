@@ -1,5 +1,6 @@
 "use strict";
 
+export let currentAccount = {};
 // Data
 const account1 = {
   email: "nickosgrigo@gmail.com",
@@ -41,11 +42,10 @@ form.addEventListener("submit", function (event) {
   console.log(emailInputValue);
   console.log(passwordInputValue);
 
-  let currentAccount = accounts.find(
+  currentAccount = accounts.find(
     (acc) => acc.email === emailInputValue.toLocaleLowerCase().trim()
   );
   console.log(currentAccount);
-  // localStorage.setItem("user", JSON.stringify(currentAccount));
 
   if (currentAccount?.pin === Number(passwordInputValue) && terms.checked) {
     console.log("Loged IN");

@@ -27,20 +27,83 @@
     />
   </head>
   <body id="body">
-    <i class="bi bi-person-circle" id="user_profile"></i>
-    <div class="container">
+    <div class="container-fluid">
       <div class="row">
-        <div class="dashboard col-lg-2 vh-100"></div>
-        <div class="main_app col-lg-10">
+        <div class="dashboard col-lg-2 vh-100 d-flex flex-column p-3">
+          <img id="logo" src="images/ecord-white-logo.png" alt="ecord_logo" />
+          <hr class="dashboard_hr" />
+          <ul class="nav nav-pills flex-column mb-auto">
+            <li>
+              <a href="#" class="nav-link text-dark active">
+                <svg class="bi pe-none me-2" width="16" height="16">
+                  <use xlink:href="#speedometer2"></use>
+                </svg>
+                Dashboard
+              </a>
+            </li>
+            <li>
+              <a href="#" class="nav-link text-white">
+                <svg class="bi pe-none me-2" width="16" height="16">
+                  <use xlink:href="#table"></use>
+                </svg>
+                Other
+              </a>
+              <!-- </li>
+            <li>
+              <a href="#" class="nav-link text-white">
+                <svg class="bi pe-none me-2" width="16" height="16">
+                  <use xlink:href="#grid"></use>
+                </svg>
+                Products
+              </a>
+            </li>
+            <li>
+              <a href="#" class="nav-link text-white">
+                <svg class="bi pe-none me-2" width="16" height="16">
+                  <use xlink:href="#people-circle"></use>
+                </svg>
+                Customers
+              </a>
+            </li> -->
+            </li>
+          </ul>
+
+          <hr class="dashboard_hr" />
+          <div class="user_menu_dropdown dropdown">
+            <a
+              href="#"
+              class="d-flex align-items-center dropdown-toggle"
+              data-bs-toggle="dropdown"
+              aria-expanded="false"
+            >
+              <i class="me-2 bi bi-person-circle" id="user_profile"></i>
+              <strong>nickos</strong>
+            </a>
+            <ul class="dropdown-menu dropdown-menu-dark text-small shadow">
+              <li>
+                <a class="dropdown-item" href="#" id="logout-btn">Sign out</a>
+              </li>
+              <li><hr class="dropdown-divider" /></li>
+              <li><a class="dropdown-item" href="#">New plan</a></li>
+              <li>
+                <a class="dropdown-item" href="#" id="delete-acoount-btn"
+                  >Delete account</a
+                >
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="main_app px-5 col-lg-10">
           <main class="app">
-            <section class="info_header row">
+            <section class="row">
               <div class="col-lg-9">
                 <div class="welcome_user">
                   Welcome back <span id="user_email_span">Nikos</span>!
                 </div>
                 <div class="budget">
                   Monthly Budget:
-                  <span id="monthly_budget_amount">700 </span> &euro;
+                  <span id="monthly_budget_amount"> </span> &euro;
                 </div>
               </div>
               <div class="col-lg-3 d-flex align-items-end">
@@ -82,7 +145,8 @@
                         <input
                           class="form-control w-50"
                           id="monthly_budget"
-                          type="text"
+                          type="number"
+                          min="0"
                         />
                       </div>
                       <div class="modal-footer">
@@ -107,8 +171,8 @@
               </div>
             </section>
 
-            <header>
-              <div class="info_tab" id="income_tab">
+            <div class="user_info">
+              <div class="summary_info_tab" id="income_tab">
                 <h2>Income</h2>
                 <i
                   class="bi bi-plus-circle-dotted add_new"
@@ -124,7 +188,7 @@
                 </div>
               </div>
 
-              <div class="info_tab" id="outcome_tab">
+              <div class="summary_info_tab" id="outcome_tab">
                 <h2>Expenses</h2>
                 <i
                   class="bi bi-plus-circle-dotted add_new"
@@ -140,7 +204,7 @@
                 </div>
               </div>
 
-              <div class="info_tab" id="savings_tab">
+              <div class="summary_info_tab" id="savings_tab">
                 <h2>Balance</h2>
                 <div class="tab_description">
                   <div class="text-center amount">
@@ -149,51 +213,23 @@
                   <i class="bi bi-piggy-bank"></i>
                 </div>
               </div>
-            </header>
+            </div>
 
             <hr class="horizontal-line" />
-            <div class="row">
+            <div class="movement_section row">
               <div class="col-lg-9">
-                <section class="movements_list">
-                  <div class="movement show">
-                    <i class="bi bi-bag-fill circle-icon"></i>
-                    <div class="movement_type">Shopping</div>
-                    <div class="price">20 &euro;</div>
-                    <div class="movement_date">19/09/23</div>
-                  </div>
-
-                  <!-- <div class="movement">
-                    <i class="bi bi-bag-fill circle-icon"></i>
-                    <div class="movement_type">Health</div>
-                    <div class="price">50 &euro;</div>
-                    <div class="movement_date">19/09/23</div>
-                  </div>
-
-                  <div class="movement">
-                    <i class="bi bi-bag-fill circle-icon"></i>
-                    <div class="movement_type">Grocery</div>
-                    <div class="price">100 &euro;</div>
-                    <div class="movement_date">19/09/23</div>
-                  </div>
-
-                  <div class="movement">
-                    <i class="bi bi-bag-fill circle-icon"></i>
-                    <div class="movement_type">Partyig</div>
-                    <div class="price">20 &euro;</div>
-                    <div class="movement_date">19/09/23</div>
-                  </div> -->
-                </section>
+                <section class="movements_list"></section>
               </div>
               <div class="col-lg-3">
                 <section class="notifications">
                   <h2>Notifications</h2>
                   <hr class="horizontal-line" />
-                  <p>
+                  <span id="notification_span">
                     Lorem ipsum dolor, sit amet consectetur adipisicing elit.
                     Eaque magni, magnam tenetur laudantium impedit labore
                     necessitatibus eos id natus incidunt iure beatae sed
                     nesciunt quos atque aperiam explicabo aut quasi.
-                  </p>
+                  </span>
                 </section>
               </div>
             </div>
@@ -226,7 +262,12 @@
           </div>
           <div class="modal-body">
             <label for="income_input" class="form-label">Price</label>
-            <input class="form-control w-50" id="income_input" type="text" />
+            <input
+              class="form-control w-50"
+              id="income_input"
+              type="number"
+              min="1"
+            />
 
             <label for="income_description" class="form-label mt-3"
               >Mini description (3 keywords)</label
@@ -280,58 +321,31 @@
             ></button>
           </div>
           <div class="modal-body">
-            <label for="monthly_budget" class="form-label"
-              >Monthly Budget</label
+            <label for="category" class="form-label mt-3"
+              >List of Categories:</label
             >
-            <form>
-              <!--Insert Type -->
-              <div class="dropdown">
-                <button
-                  class="btn btn-secondary dropdown-toggle"
-                  type="button"
-                  data-bs-toggle="dropdown"
-                  aria-expanded="false"
-                >
-                  Select category
-                </button>
-                <ul class="dropdown-menu mt-3">
-                  <li>
-                    <a class="dropdown-item active" href="#" value="shopping"
-                      >Shopping</a
-                    >
-                  </li>
-                  <li>
-                    <a class="dropdown-item" href="#" value="health">Health</a>
-                  </li>
-                  <li>
-                    <a class="dropdown-item" href="#" value="grocery"
-                      >Grocery</a
-                    >
-                  </li>
-                  <li>
-                    <a class="dropdown-item" href="#" value="hangout"
-                      >Hang-Out</a
-                    >
-                  </li>
-                  <li>
-                    <a class="dropdown-item" href="#" value="travel">Travel</a>
-                  </li>
-                  <li>
-                    <a class="dropdown-item" href="#" value="bills">Bills</a>
-                  </li>
-                </ul>
-              </div>
-              <!--Insert Price  -->
-              <label for="expense_amount" class="form-label mt-3"
-                >Insert price</label
-              >
-              <input
-                class="form-control w-50"
-                id="expense_amount"
-                type="text"
-              />
-            </form>
+            <select name="category" id="category" class="dropdown w-75">
+              <option value="shopping">Shopping</option>
+              <option value="health">Health</option>
+              <option value="grocery">Grocery</option>
+
+              <option value="hangout">Hang-Out</option>
+              <option value="travel">Travel</option>
+              <option value="bills">Bills</option>
+            </select>
+
+            <!--Insert Price  -->
+            <label for="expense_amount" class="form-label mt-3"
+              >Insert price</label
+            >
+            <input
+              class="form-control w-50"
+              id="expense_amount"
+              type="number"
+              min="1"
+            />
           </div>
+
           <div class="modal-footer">
             <button
               type="button"

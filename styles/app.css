@@ -1,4 +1,4 @@
-.info_tab {
+.summary_info_tab {
   width: 240px;
   height: 120px;
   border-radius: 9px;
@@ -8,7 +8,7 @@
   position: relative;
 }
 
-.info_tab h2 {
+.summary_info_tab h2 {
   margin-left: 10px;
   font-size: 30px;
 }
@@ -31,7 +31,7 @@
   background-color: #ffffff;
 }
 
-header {
+.user_info {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -40,6 +40,7 @@ header {
 
 .welcome_user {
   margin-top: 30px;
+  font-size: 17px;
 }
 
 .budget {
@@ -117,16 +118,8 @@ header {
   transform: rotate(90deg);
 }
 
-.info_tab i {
+.summary_info_tab i {
   color: white;
-}
-
-#user_profile {
-  position: absolute;
-  left: 30px;
-  top: 20px;
-  font-size: 30px;
-  color: rgb(97, 89, 89);
 }
 
 .notifications {
@@ -158,6 +151,10 @@ header {
   margin-top: 30px;
 }
 
+.dashboard_hr {
+  border-top: 2px solid #ffffff;
+}
+
 .empty-list {
   color: grey;
   font-size: 20px;
@@ -181,3 +178,78 @@ header {
 }
 
 /*-----------EXTRA--------------*/
+.btn-primary,
+.btn-primary:hover,
+.btn-primary:active,
+.btn-primary:visited {
+  background-color: #126d52 !important;
+}
+
+.form-group {
+  display: block;
+  margin-bottom: 10px;
+}
+
+.dropdown {
+  display: block;
+  width: 100%;
+  height: 40px;
+  padding: 6px 12px;
+  font-size: 16px;
+  line-height: 1.42857143;
+  color: #555;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.dropdown:focus {
+  border-color: #66afe9;
+  outline: 0;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075),
+    0 0 8px rgba(102, 175, 233, 0.6);
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075),
+    0 0 8px rgba(102, 175, 233, 0.6);
+}
+
+.dropdown option {
+  font-size: 16px;
+  color: #555;
+}
+
+.dashboard {
+  background-color: #126d52;
+}
+
+.user_menu_dropdown {
+  background-color: #126d52;
+  border: none;
+}
+
+.user_menu_dropdown a {
+  text-decoration: none;
+  color: white;
+}
+
+#user_profile {
+  font-size: 30px;
+  color: rgb(255, 251, 251);
+  /* display: inline; */
+}
+
+.active {
+  background-color: #cfcaca !important;
+  font-weight: bold;
+}
+
+#logo {
+  justify-self: center;
+  align-self: center;
+  width: 140px;
+  margin: 20px 0px;
+}
+
+#user_email_span {
+  color: #0e533e;
+  font-weight: bold;
+}
