@@ -49,25 +49,37 @@
 /*---------*/
 
 #alert {
-  display: block;
   position: fixed;
-  top: 10%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  top: 10px;
+  left: 38%;
+  /* right: 50%; */
+  /* transform: translateX(-50%); */
   z-index: 3;
-  opacity: 0;
-  transition: opacity 0.5s ease;
-
-  padding: 1rem;
+  font-size: 18px;
+  padding: 20px 40px;
   width: 80%;
-  max-width: 400px;
+  max-width: 420px;
   text-align: center;
-  background-color: #ec3a3ae1;
-  border: 1px solid #e92c35;
+  background-color: #ad3b3be1;
+  border: 1px solid #c74c52;
+  border-left: 8px solid rgb(170, 15, 15);
   border-radius: 10px;
   color: #ffffff;
+  /* 
+  opacity: 1;
+  transition: opacity 0.5s ease-in-out; */
 }
 
-.alert-show {
+/* #alert .show {
   opacity: 1;
+} */
+
+.hidden {
+  display: none;
+}
+
+.bi-exclamation-triangle {
+  font-size: 30px;
+  padding-right: 10px;
+  padding-left: 0px;
 }

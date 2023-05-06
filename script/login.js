@@ -21,6 +21,9 @@ const passwordInput = document.querySelector("#user_password");
 const form = document.querySelector(".form");
 const terms = document.querySelector("#terms");
 
+const alertMessageEl = document.getElementById("alert");
+// console.log(alertMessageEl);
+
 form.addEventListener("submit", function (event) {
   event.preventDefault();
 
@@ -39,17 +42,19 @@ form.addEventListener("submit", function (event) {
     localStorage.setItem("currentEmail", currentEmail);
 
     window.location = "app.html";
+
+    // Clear input fields
+    emailInput.value = passwordInput.value = "";
   } else {
     // If the credentials are incorrect, display an error message
-    const messageEl = document.querySelector("#alert");
-    messageEl.classList.add("alert-show");
-    setTimeout(() => {
-      messageEl.classList.remove("alert-show");
-    }, 4000); // 5000 milliseconds = 5 seconds
-  }
+    alertMessageEl.classList.remove("hidden");
+    alertMessageEl.classList.add("animate__fadeInDown");
 
-  // Clear input fields
-  inputLoginUsername.value = inputLoginPin.value = "";
+    setTimeout(() => {
+      alertMessageEl.classList.remove("animate__fadeInDown");
+      alertMessageEl.classList.add("hidden");
+    }, 4000);
+  }
 });
 
 // export { currentEmail };
