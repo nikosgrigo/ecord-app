@@ -1,21 +1,6 @@
 "use strict";
-// import { currentEmail } from "./login.js";
 
-// console.log(currentEmail);
-// "John Doe"
-
-const userEmail = localStorage.getItem("currentEmail");
-// console.log(myStoredString);
-const userDatabase = [];
-
-const user = {
-  email: userEmail,
-  budget: 0,
-  income: [], //300 [{ amount: 100 }, { amount: 200 }],
-  expenses: [], //-300 { amount: -100 }, { amount: -200 }
-  saving: 0,
-};
-
+//HTML ELEMENTS
 const monthlyBudgetInput = document.getElementById("monthly_budget");
 
 //Get modal buttons
@@ -51,11 +36,43 @@ const notificationSpan = document.getElementById("notification_span");
 const btnLogOut = document.getElementById("logout-btn");
 const btnDeleteAccount = document.getElementById("delete-acoount-btn");
 
+const userEmail = localStorage.getItem("currentEmail");
+const storedUserData = localStorage.getItem("currentUser");
+
+/*-------------------------------------------------------- */
+
+class User {
+  constructor(email, budget = 0, income = [], expenses = [], saving = 0) {
+    this.email = email;
+    this.budget = budget;
+    this.income = income;
+    this.expenses = expenses;
+    this.saving = saving;
+  }
+}
+
+const user = {};
+
+//Check for user data on local storage
+if (storedUserData !== null) {
+  Object.assign(user, JSON.parse(storedUserData));
+  // console.log(user);
+} else {
+  //There is no user on localsrtorage
+  console.log("No user data found in localStorage");
+  //Create a ew empty Object
+  Object.assign(user, new User(userEmail));
+  // console.log(user);
+}
+
 //////
 
 const calculateDisplayAllExpenses = function () {
   //Array expenses in user object
-  const totalExpenses = user.expenses.reduce((acc, cur) => acc + cur.amount, 0);
+  const totalExpenses =
+    user.expenses.length !== 0
+      ? user.expenses.reduce((acc, cur) => acc + cur.amount, 0)
+      : 0;
   expenseSpan.textContent = totalExpenses;
   return totalExpenses;
 };
@@ -63,7 +80,10 @@ const calculateDisplayAllExpenses = function () {
 ///////////
 const calculateDisplayAllIncomeSources = function () {
   //Array income in user object
-  const totalIncome = user.income.reduce((acc, cur) => acc + cur.amount, 0);
+  const totalIncome =
+    user.income.length !== 0
+      ? user.income.reduce((acc, cur) => acc + cur.amount, 0)
+      : 0;
   incomeSpan.textContent = totalIncome;
   return totalIncome;
 };
@@ -79,6 +99,23 @@ const calculateDisplaySavings = function () {
   savingSpan.textContent = user.saving;
 };
 
+//ERROR
+//WHEN THE PAGES LOAD WILL DISPLAY ALL MOVEMENTS
+const displayUserMovementsUI = function () {
+  user.movements.forEach((movObject) => {
+    const html = `<div class="movement show">
+      <i class="bi bi-patch-${
+        movObject.type === "income" ? "plus-fill" : "minus-fill"
+      } circle-icon"></i>
+    <div class="movement_type">${movObject.type}</div>
+    <div class="price">${movObject.amount} &euro;</div>
+    <div class="movement_date">${movObject.date}</div>
+  </div>`;
+    movementsListDiv.insertAdjacentHTML("beforeend", html);
+    console.log("ok");
+  });
+};
+
 document.addEventListener("DOMContentLoaded", function () {
   console.log("LOADED");
   userEmailSpan.textContent = user.email; //Welcome user
@@ -87,20 +124,28 @@ document.addEventListener("DOMContentLoaded", function () {
   calculateDisplayAllExpenses();
   calculateDisplayAllIncomeSources();
   calculateDisplaySavings();
-  // checkForSmallBalance();
+  displayUserMovementsUI();
 });
 
-const resetUserObject = function (user) {
+const resetUserObject = function () {
   user.income = [];
   user.expenses = [];
   user.saving = [];
 };
 
-const resetUI = function () {
-  incomeSpan.textContent =
-    expenseSpan.textContent =
-    savingSpan.textContent =
-      "0";
+const changeMonthlyBudgetforUser = function (newBudget) {
+  //Change object to store data about his budget
+  user.budget = newBudget;
+  // console.log(user);
+
+  //Dislpay budget in UI
+  monthlyBudgetSpan.textContent = newBudget;
+
+  //reset data and UI for a new month
+  resetUserObject();
+
+  incomeSpan.textContent = expenseSpan.textContent = "0";
+  calculateDisplaySavings();
 
   //Empty list
   movementsListDiv.classList.add("empty-list");
@@ -110,22 +155,9 @@ const resetUI = function () {
   }
 
   const html = `<i class="bi bi-binoculars-fill"></i>
-  <p>No recent data found!</p>`;
+    <p>No recent data found!</p>`;
 
   movementsListDiv.insertAdjacentHTML("beforeend", html);
-};
-
-const changeMonthlyBudgetforUser = function (user, budget) {
-  //Change object to store data about his budget
-  user.budget = budget;
-  // console.log(user);
-
-  //Dislpay budget in UI
-  monthlyBudgetSpan.textContent = budget;
-
-  //reset data and UI for a new month
-  resetUserObject(user);
-  resetUI();
 };
 
 //Check if balance is smaller than 50 and send notification to the user
@@ -145,14 +177,14 @@ const hideModal = function (modal) {
   modal.hide();
 };
 
-const updateUI = function () {
-  calculateDisplaySavings();
-  calculateDisplayAllIncomeSources();
-  calculateDisplayAllExpenses();
-};
+user.movements = [];
 
-const displayNewMovementUI = function (type, movementObject) {
+const addDisplayNewMovementUI = function (movementObject) {
   const currentDate = new Date().toLocaleDateString("en-GB");
+  movementObject.date = currentDate;
+
+  user.movements.push(movementObject);
+  console.log(user);
 
   //if is the first movement in the list then remove empty
   if (movementsListDiv.classList.contains("empty-list")) {
@@ -160,37 +192,57 @@ const displayNewMovementUI = function (type, movementObject) {
     movementsListDiv.classList.remove("empty-list");
   }
 
-  if (type === "income") {
+  if (movementObject.type === "income") {
+    //Add new income source on user object income source array
+    user.income.push(movementObject);
+
     const html = `<div class="movement show">
     <i class="bi bi-patch-plus-fill circle-icon"></i>
-  <div class="movement_type">${movementObject.description}</div>
+  <div class="movement_type">${movementObject.category}</div>
   <div class="price">${movementObject.amount} &euro;</div>
   <div class="movement_date">${currentDate}</div>
 </div>`;
     movementsListDiv.insertAdjacentHTML("beforeend", html);
+
     //
-  } else if (type === "expense") {
+  } else if (movementObject.type === "expense") {
+    //Add new expense on user object expense array
+    user.expenses.push(movementObject);
+
     const html = `<div class="movement show">
     <i class="bi bi-patch-minus-fill circle-icon"></i>
   <div class="movement_type">${movementObject.category}</div>
   <div class="price">${movementObject.amount} &euro;</div>
   <div class="movement_date">${currentDate}</div>
 </div>`;
-    console.log("ok");
+
     movementsListDiv.insertAdjacentHTML("beforeend", html);
   }
+
+  calculateDisplayAllExpenses();
+  calculateDisplayAllIncomeSources();
+  calculateDisplaySavings();
 };
 
-//-----------------Event Listener for modals
+const saveUserDataOnLocalStorage = function () {
+  localStorage.setItem("currentUser", JSON.stringify(user));
+  // console.log("SAVED DATA");
+  // console.log(user);
+};
+
+setInterval(saveUserDataOnLocalStorage, 4000);
+
+//-----------------Event Listener for modals--------------
 
 btnResetBudget.addEventListener("click", function () {
   const budget = Number(monthlyBudgetInput.value);
   // console.log(budget);
+  // user.budget = budget;
 
   //if input is a number then get data and remove modal
-  if (budget) {
+  if (budget > 10) {
     hideModal(modalNewMonthPlan);
-    changeMonthlyBudgetforUser(user, budget);
+    changeMonthlyBudgetforUser(budget);
   } else {
     console.log("Display error message");
   }
@@ -205,14 +257,13 @@ btnAddNewSourceOfIncome.addEventListener("click", function () {
   if (amount && incomeDescription !== "") {
     hideModal(addNewIncomeModal);
     const newIncomeObject = {
+      type: "income",
       amount: amount,
-      description: incomeDescription,
+      category: incomeDescription,
     };
 
-    // console.log(newIncomeObject);
-    user.income.push(newIncomeObject);
-    updateUI();
-    displayNewMovementUI("income", newIncomeObject);
+    // updateUIForNewMovement();
+    addDisplayNewMovementUI(newIncomeObject);
     // console.log(user.income);
   }
 });
@@ -226,13 +277,12 @@ btnAddNewExpense.addEventListener("click", function () {
   if (amount && checkForValidExpense(amount)) {
     hideModal(modalNewExpense);
     const newExpenseObject = {
+      type: "expense",
       amount: -Math.abs(amount),
       category: selectedCategory,
     };
 
-    user.expenses.push(newExpenseObject);
-    updateUI();
-    displayNewMovementUI("expense", newExpenseObject);
+    addDisplayNewMovementUI(newExpenseObject);
   } else {
     notificationSpan.textContent = `📌 You don't have enough money !`;
 
@@ -249,12 +299,17 @@ btnLogOut.addEventListener("click", function (e) {
   // localStorage.setItem("user", "user");
   // set the new href attribute
   console.log("Loged Out");
+  localStorage.setItem("currentUser", JSON.stringify(user));
   window.location = "login.html";
 });
 
 btnDeleteAccount.addEventListener("click", function (e) {
   e.preventDefault();
   // Remove a value from localStorage
-  localStorage.removeItem("user");
+  localStorage.removeItem("currentUser");
   setTimeout((window.location = "login.html"), 5000);
 });
+
+//ERROR DISPLAYING MOVEMENT LIST
+
+//ADD THIS TO DOMCONTENTLOAD INIT APP
