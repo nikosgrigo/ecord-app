@@ -30,7 +30,7 @@ const textareaInputElement = document.querySelector("#income_description");
 
 const movementsListDiv = document.querySelector(".movements_list");
 
-const notificationSpan = document.getElementById("notification_span");
+const notificationSpan = document.querySelector(".notification_span");
 
 //User buttons for log out and delete account
 const btnLogOut = document.getElementById("logout-btn");
@@ -56,7 +56,6 @@ const user = {};
 //Check for user data on local storage
 if (storedUserData !== null) {
   Object.assign(user, JSON.parse(storedUserData));
-  // console.log(user);
 } else {
   //There is no user on localsrtorage
   console.log("No user data found in localStorage");
@@ -64,8 +63,6 @@ if (storedUserData !== null) {
   Object.assign(user, new User(userEmail));
   // console.log(user);
 }
-
-//////
 
 const calculateDisplayAllExpenses = function () {
   //Array expenses in user object
@@ -77,7 +74,6 @@ const calculateDisplayAllExpenses = function () {
   return totalExpenses;
 };
 
-///////////
 const calculateDisplayAllIncomeSources = function () {
   //Array income in user object
   const totalIncome =
@@ -89,7 +85,6 @@ const calculateDisplayAllIncomeSources = function () {
 };
 
 const calculateDisplaySavings = function () {
-  //Income + Balance - Outcome
   //Calculate savings
   user.saving =
     calculateDisplayAllIncomeSources() +
@@ -99,9 +94,20 @@ const calculateDisplaySavings = function () {
   savingSpan.textContent = user.saving;
 };
 
-//ERROR
+const updateUI = function () {
+  calculateDisplayAllExpenses();
+  calculateDisplayAllIncomeSources();
+  calculateDisplaySavings();
+};
+
 //WHEN THE PAGES LOAD WILL DISPLAY ALL MOVEMENTS
 const displayUserMovementsUI = function () {
+  movementsListDiv.classList.remove("empty-list");
+
+  while (movementsListDiv.firstChild) {
+    movementsListDiv.removeChild(movementsListDiv.firstChild);
+  }
+
   user.movements.forEach((movObject) => {
     const html = `<div class="movement show">
       <i class="bi bi-patch-${
@@ -116,21 +122,46 @@ const displayUserMovementsUI = function () {
   });
 };
 
+const resetMovementListUI = function () {
+  if (!checkForEmptyList()) {
+    //Reset movement list UI and delete all past movements
+    movementsListDiv.classList.add("empty-list");
+
+    while (movementsListDiv.firstChild) {
+      movementsListDiv.removeChild(movementsListDiv.firstChild);
+    }
+
+    const html = `<i class="bi bi-binoculars-fill"></i>
+ <p>No recent data found!</p>`;
+
+    movementsListDiv.insertAdjacentHTML("beforeend", html);
+  }
+};
+
 document.addEventListener("DOMContentLoaded", function () {
   console.log("LOADED");
   userEmailSpan.textContent = user.email; //Welcome user
   monthlyBudgetSpan.textContent = user.budget; //Display user monthly budget
+  notificationSpan.textContent = `📌 You don't have any notification wet!`;
 
-  calculateDisplayAllExpenses();
-  calculateDisplayAllIncomeSources();
-  calculateDisplaySavings();
-  displayUserMovementsUI();
+  if (user.movements !== 0 && "movements" in user) {
+    //THERE ARE MOVEMENTS ON THE OBJECT SO DISPLAY THEM
+    displayUserMovementsUI();
+    console.log("THERE IS MOVEMENTS ON THE OBJECT SO DISPLAY THEM");
+  } else {
+    //THE MOVEMENT LIST IS EMPTY SO DISPLAY EMPTY LIST TEXT
+    resetMovementListUI();
+    console.log("THE MOVEMENT LIST IS EMPTY SO DISPLAY EMPTY LIST");
+  }
+
+  updateUI();
 });
 
 const resetUserObject = function () {
   user.income = [];
   user.expenses = [];
-  user.saving = [];
+  calculateDisplaySavings();
+  user.movements = [];
 };
 
 const changeMonthlyBudgetforUser = function (newBudget) {
@@ -142,22 +173,9 @@ const changeMonthlyBudgetforUser = function (newBudget) {
   monthlyBudgetSpan.textContent = newBudget;
 
   //reset data and UI for a new month
-  resetUserObject();
-
   incomeSpan.textContent = expenseSpan.textContent = "0";
-  calculateDisplaySavings();
-
-  //Empty list
-  movementsListDiv.classList.add("empty-list");
-
-  while (movementsListDiv.firstChild) {
-    movementsListDiv.removeChild(movementsListDiv.firstChild);
-  }
-
-  const html = `<i class="bi bi-binoculars-fill"></i>
-    <p>No recent data found!</p>`;
-
-  movementsListDiv.insertAdjacentHTML("beforeend", html);
+  resetUserObject();
+  resetMovementListUI();
 };
 
 //Check if balance is smaller than 50 and send notification to the user
@@ -177,19 +195,21 @@ const hideModal = function (modal) {
   modal.hide();
 };
 
-user.movements = [];
-
 const addDisplayNewMovementUI = function (movementObject) {
   const currentDate = new Date().toLocaleDateString("en-GB");
   movementObject.date = currentDate;
 
   user.movements.push(movementObject);
-  console.log(user);
+  // console.log(user);
 
-  //if is the first movement in the list then remove empty
-  if (movementsListDiv.classList.contains("empty-list")) {
-    movementsListDiv.innerHTML = "";
+  if (checkForEmptyList()) {
+    //Reset movement list UI and delete all past movements
     movementsListDiv.classList.remove("empty-list");
+
+    //If list is empty so is the first item on the list clean it
+    while (movementsListDiv.firstChild) {
+      movementsListDiv.removeChild(movementsListDiv.firstChild);
+    }
   }
 
   if (movementObject.type === "income") {
@@ -219,9 +239,7 @@ const addDisplayNewMovementUI = function (movementObject) {
     movementsListDiv.insertAdjacentHTML("beforeend", html);
   }
 
-  calculateDisplayAllExpenses();
-  calculateDisplayAllIncomeSources();
-  calculateDisplaySavings();
+  updateUI();
 };
 
 const saveUserDataOnLocalStorage = function () {
@@ -235,24 +253,24 @@ setInterval(saveUserDataOnLocalStorage, 4000);
 //-----------------Event Listener for modals--------------
 
 btnResetBudget.addEventListener("click", function () {
-  const budget = Number(monthlyBudgetInput.value);
-  // console.log(budget);
-  // user.budget = budget;
+  const newBudget = Number(monthlyBudgetInput.value);
 
   //if input is a number then get data and remove modal
-  if (budget > 10) {
+  if (newBudget > 10) {
     hideModal(modalNewMonthPlan);
-    changeMonthlyBudgetforUser(budget);
+    changeMonthlyBudgetforUser(newBudget);
   } else {
     console.log("Display error message");
   }
 });
 
+const checkForEmptyList = function () {
+  return movementsListDiv.classList.contains("empty-list");
+};
+
 btnAddNewSourceOfIncome.addEventListener("click", function () {
   const amount = Number(inputAmountElement.value);
-  // console.log(amount);
   const incomeDescription = String(textareaInputElement.value).trim();
-  // console.log(incomeDescription);
 
   if (amount && incomeDescription !== "") {
     hideModal(addNewIncomeModal);
@@ -262,9 +280,7 @@ btnAddNewSourceOfIncome.addEventListener("click", function () {
       category: incomeDescription,
     };
 
-    // updateUIForNewMovement();
     addDisplayNewMovementUI(newIncomeObject);
-    // console.log(user.income);
   }
 });
 
@@ -296,9 +312,8 @@ btnAddNewExpense.addEventListener("click", function () {
 
 btnLogOut.addEventListener("click", function (e) {
   e.preventDefault();
-  // localStorage.setItem("user", "user");
+
   // set the new href attribute
-  console.log("Loged Out");
   localStorage.setItem("currentUser", JSON.stringify(user));
   window.location = "login.html";
 });
@@ -307,9 +322,10 @@ btnDeleteAccount.addEventListener("click", function (e) {
   e.preventDefault();
   // Remove a value from localStorage
   localStorage.removeItem("currentUser");
+
+  //Update UI
+  updateUI();
+
+  //Redirect user on login page
   setTimeout((window.location = "login.html"), 5000);
 });
-
-//ERROR DISPLAYING MOVEMENT LIST
-
-//ADD THIS TO DOMCONTENTLOAD INIT APP

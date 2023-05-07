@@ -4,7 +4,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Ecord App - First Finance for personal use</title>
-    <link rel="stylesheet" href="/styles/app.css" />
+    <link rel="stylesheet" href="/src/assets/styles/app.css" />
 
     <!--Bootstrap CSS-->
     <link
@@ -30,7 +30,11 @@
     <div class="container-fluid">
       <div class="row">
         <div class="dashboard col-lg-2 vh-100 d-flex flex-column p-3">
-          <img id="logo" src="images/ecord-white-logo.png" alt="ecord_logo" />
+          <img
+            id="logo"
+            src="/src/assets/images/ecord-white-logo.png"
+            alt="ecord_logo"
+          />
           <hr class="dashboard_hr" />
           <ul class="nav nav-pills flex-column mb-auto">
             <li>
@@ -48,23 +52,6 @@
                 </svg>
                 Other
               </a>
-              <!-- </li>
-            <li>
-              <a href="#" class="nav-link text-white">
-                <svg class="bi pe-none me-2" width="16" height="16">
-                  <use xlink:href="#grid"></use>
-                </svg>
-                Products
-              </a>
-            </li>
-            <li>
-              <a href="#" class="nav-link text-white">
-                <svg class="bi pe-none me-2" width="16" height="16">
-                  <use xlink:href="#people-circle"></use>
-                </svg>
-                Customers
-              </a>
-            </li> -->
             </li>
           </ul>
 
@@ -77,7 +64,6 @@
               aria-expanded="false"
             >
               <i class="me-2 bi bi-person-circle" id="user_profile"></i>
-              <strong>nickos</strong>
             </a>
             <ul class="dropdown-menu dropdown-menu-dark text-small shadow">
               <li>
@@ -182,7 +168,7 @@
                 ></i>
                 <div class="tab_description">
                   <div class="amount">
-                    <span id="income_value">200</span> &euro;
+                    <span id="income_value">0</span> &euro;
                   </div>
                   <i class="bi bi-wallet2"></i>
                 </div>
@@ -198,7 +184,7 @@
                 ></i>
                 <div class="tab_description">
                   <div class="text-center amount">
-                    <span id="expenses_value">400</span> &euro;
+                    <span id="expenses_value">0</span> &euro;
                   </div>
                   <i class="bi bi-bag-x"></i>
                 </div>
@@ -208,7 +194,7 @@
                 <h2>Balance</h2>
                 <div class="tab_description">
                   <div class="text-center amount">
-                    <span id="savings_value">100</span> &euro;
+                    <span id="savings_value">0</span> &euro;
                   </div>
                   <i class="bi bi-piggy-bank"></i>
                 </div>
@@ -217,25 +203,27 @@
 
             <hr class="horizontal-line" />
             <div class="movement_section row">
-              <div class="col-lg-9">
+              <div class="col-lg-8">
                 <section class="movements_list"></section>
               </div>
-              <div class="col-lg-3">
+              <div class="col-lg-4">
                 <section class="notifications">
-                  <h2>Notifications</h2>
+                  <h2 class="text-center">Notifications</h2>
                   <hr class="horizontal-line" />
-                  <span id="notification_span">
-                    Lorem ipsum dolor, sit amet consectetur adipisicing elit.
-                    Eaque magni, magnam tenetur laudantium impedit labore
-                    necessitatibus eos id natus incidunt iure beatae sed
-                    nesciunt quos atque aperiam explicabo aut quasi.
-                  </span>
+                  <span class="notification_span"></span>
                 </section>
               </div>
             </div>
           </main>
         </div>
       </div>
+
+      <footer class="vw-100">
+        <p>
+          &copy; 2023 ecord. All content on this website is created for
+          educational and personal portfolio purposes only.
+        </p>
+      </footer>
     </div>
 
     <div
@@ -372,6 +360,6 @@
       integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe"
       crossorigin="anonymous"
     ></script>
-    <script type="module" src="script/app.js"></script>
+    <script src="/src/scripts/app.js"></script>
   </body>
 </html>

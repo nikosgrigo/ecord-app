@@ -29,7 +29,6 @@
 
 #submit_button {
   background-color: var(--secondary-color);
-  /* borgb(23, 182, 39)r(--primary-color); */
   padding: 10px 55px;
   justify-self: center;
 }
@@ -46,14 +45,10 @@
   font-size: 40px;
 }
 
-/*---------*/
-
 #alert {
   position: fixed;
   top: 10px;
   left: 38%;
-  /* right: 50%; */
-  /* transform: translateX(-50%); */
   z-index: 3;
   font-size: 18px;
   padding: 20px 40px;
@@ -61,18 +56,10 @@
   max-width: 420px;
   text-align: center;
   background-color: #ad3b3be1;
-  border: 1px solid #c74c52;
   border-left: 8px solid rgb(170, 15, 15);
   border-radius: 10px;
   color: #ffffff;
-  /* 
-  opacity: 1;
-  transition: opacity 0.5s ease-in-out; */
 }
-
-/* #alert .show {
-  opacity: 1;
-} */
 
 .hidden {
   display: none;
