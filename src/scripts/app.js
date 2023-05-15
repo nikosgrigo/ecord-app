@@ -58,10 +58,9 @@ if (storedUserData !== null) {
   Object.assign(user, JSON.parse(storedUserData));
 } else {
   //There is no user on localsrtorage
-  console.log("No user data found in localStorage");
+  // console.log("No user data found in localStorage");
   //Create a ew empty Object
   Object.assign(user, new User(userEmail));
-  // console.log(user);
 }
 
 const calculateDisplayAllExpenses = function () {
@@ -118,7 +117,6 @@ const displayUserMovementsUI = function () {
     <div class="movement_date">${movObject.date}</div>
   </div>`;
     movementsListDiv.insertAdjacentHTML("beforeend", html);
-    console.log("ok");
   });
 };
 
@@ -139,7 +137,6 @@ const resetMovementListUI = function () {
 };
 
 document.addEventListener("DOMContentLoaded", function () {
-  console.log("LOADED");
   userEmailSpan.textContent = user.email; //Welcome user
   monthlyBudgetSpan.textContent = user.budget; //Display user monthly budget
   notificationSpan.textContent = `📌 You don't have any notification wet!`;
@@ -147,11 +144,9 @@ document.addEventListener("DOMContentLoaded", function () {
   if (user.movements !== 0 && "movements" in user) {
     //THERE ARE MOVEMENTS ON THE OBJECT SO DISPLAY THEM
     displayUserMovementsUI();
-    console.log("THERE IS MOVEMENTS ON THE OBJECT SO DISPLAY THEM");
   } else {
     //THE MOVEMENT LIST IS EMPTY SO DISPLAY EMPTY LIST TEXT
     resetMovementListUI();
-    console.log("THE MOVEMENT LIST IS EMPTY SO DISPLAY EMPTY LIST");
   }
 
   updateUI();
@@ -167,7 +162,6 @@ const resetUserObject = function () {
 const changeMonthlyBudgetforUser = function (newBudget) {
   //Change object to store data about his budget
   user.budget = newBudget;
-  // console.log(user);
 
   //Dislpay budget in UI
   monthlyBudgetSpan.textContent = newBudget;
@@ -186,7 +180,10 @@ const checkForSmallBalance = function () {
 };
 
 const checkForValidExpense = function (currentExpense) {
-  return user.saving - 50 > currentExpense ? true : false;
+  if (user.saving - 50 > 0 && user.saving - 50 >= currentExpense) {
+    return true;
+  }
+  return false;
 };
 
 const hideModal = function (modal) {
@@ -251,6 +248,26 @@ const saveUserDataOnLocalStorage = function () {
 setInterval(saveUserDataOnLocalStorage, 4000);
 
 //-----------------Event Listener for modals--------------
+const alertMessageEl = document.querySelectorAll(".invalid_feedback");
+const textMessageList = document.querySelectorAll(".message_text");
+
+const displayInvalidInputMessage = (curMessage, index) => {
+  // Check if the collection contains at least one element
+  if (alertMessageEl.length > 0) {
+    // Access the first element using index 0
+    const messageChangingElement = alertMessageEl[index];
+    const textMessageChanging = textMessageList[index];
+
+    // Modify the content of the element
+    textMessageChanging.textContent = curMessage;
+
+    messageChangingElement.classList.add("show");
+
+    setTimeout(() => {
+      messageChangingElement.classList.remove("show");
+    }, 5000);
+  }
+};
 
 btnResetBudget.addEventListener("click", function () {
   const newBudget = Number(monthlyBudgetInput.value);
@@ -260,7 +277,7 @@ btnResetBudget.addEventListener("click", function () {
     hideModal(modalNewMonthPlan);
     changeMonthlyBudgetforUser(newBudget);
   } else {
-    console.log("Display error message");
+    displayInvalidInputMessage("Empty input or invalid amount", 0);
   }
 });
 
@@ -279,8 +296,9 @@ btnAddNewSourceOfIncome.addEventListener("click", function () {
       amount: amount,
       category: incomeDescription,
     };
-
     addDisplayNewMovementUI(newIncomeObject);
+  } else {
+    displayInvalidInputMessage("Empty input. Please Insert a valid input!", 1);
   }
 });
 
@@ -300,13 +318,14 @@ btnAddNewExpense.addEventListener("click", function () {
 
     addDisplayNewMovementUI(newExpenseObject);
   } else {
-    notificationSpan.textContent = `📌 You don't have enough money !`;
-
-    setTimeout(
-      (notificationSpan.textContent = `📌 You don't have any notification!`),
-      4000
-    );
-    hideModal(modalNewExpense);
+    checkForValidExpense(amount)
+      ? displayInvalidInputMessage(
+          "Empty input.Please insert a valid input!",
+          2
+        )
+      : user.saving === 0
+      ? displayInvalidInputMessage("You don't have money yet!", 2)
+      : displayInvalidInputMessage("You will run out of money!", 2);
   }
 });
 

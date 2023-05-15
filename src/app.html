@@ -45,14 +45,6 @@
                 Dashboard
               </a>
             </li>
-            <li>
-              <a href="#" class="nav-link text-white">
-                <svg class="bi pe-none me-2" width="16" height="16">
-                  <use xlink:href="#table"></use>
-                </svg>
-                Other
-              </a>
-            </li>
           </ul>
 
           <hr class="dashboard_hr" />
@@ -99,7 +91,7 @@
                   data-bs-toggle="modal"
                   data-bs-target="#add_new_plan"
                 >
-                  new plan <i class="bi bi-plus"></i>
+                  New plan <i class="bi bi-plus"></i>
                 </button>
 
                 <div
@@ -129,12 +121,16 @@
                           >Monthly Budget</label
                         >
                         <input
-                          class="form-control w-50"
+                          class="form-control w-75"
                           id="monthly_budget"
                           type="number"
                           min="0"
                         />
                       </div>
+                      <span class="invalid_feedback"
+                        ><i class="bi bi-exclamation-circle me-3"></i>
+                        <span class="message_text">Invalid Message</span></span
+                      >
                       <div class="modal-footer">
                         <button
                           type="button"
@@ -251,7 +247,7 @@
           <div class="modal-body">
             <label for="income_input" class="form-label">Price</label>
             <input
-              class="form-control w-50"
+              class="form-control w-75"
               id="income_input"
               type="number"
               min="1"
@@ -262,11 +258,15 @@
             >
 
             <textarea
-              class="form-control w-50"
+              class="form-control w-75"
               id="income_description"
               rows="2"
             ></textarea>
           </div>
+          <span class="invalid_feedback"
+            ><i class="bi bi-exclamation-circle me-3"></i>
+            <span class="message_text">Invalid Message</span></span
+          >
           <div class="modal-footer">
             <button
               type="button"
@@ -327,13 +327,16 @@
               >Insert price</label
             >
             <input
-              class="form-control w-50"
+              class="form-control w-75"
               id="expense_amount"
               type="number"
               min="1"
             />
           </div>
-
+          <span class="invalid_feedback"
+            ><i class="bi bi-exclamation-circle me-3"></i>
+            <span class="message_text">Invalid Message</span></span
+          >
           <div class="modal-footer">
             <button
               type="button"
