@@ -41,7 +41,9 @@ form.addEventListener("submit", function (event) {
 
     localStorage.setItem("currentEmail", currentEmail);
 
-    window.location = "app.html";
+    // window.location = "app.html";
+    // Redirect to app.html
+    window.location.href = "app.html";
 
     // Clear input fields
     emailInput.value = passwordInput.value = "";
