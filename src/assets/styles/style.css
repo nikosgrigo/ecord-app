@@ -17,6 +17,12 @@
   position: relative;
 }
 
+.demo_credentials {
+  margin-top: 1rem;
+  font-weight: 400;
+  color: rgba(240, 248, 255, 0.789);
+}
+
 .right_section {
   background-color: var(--primary-color);
 }

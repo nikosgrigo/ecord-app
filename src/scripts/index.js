@@ -10,10 +10,10 @@ const userDatabase = {
     email: "evizampeka@gmail.com",
     password: "2222",
   },
-  // "user3@example.com": {
-  //   email: "user3@example.com",
-  //   password: "password3",
-  // },
+  "user3@example.com": {
+    email: "user3@example.com",
+    password: "password3",
+  },
 };
 
 const emailInput = document.querySelector("#user_email");

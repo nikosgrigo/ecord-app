@@ -334,7 +334,7 @@ btnLogOut.addEventListener("click", function (e) {
 
   // set the new href attribute
   localStorage.setItem("currentUser", JSON.stringify(user));
-  window.location = "login.html";
+  window.location.href = "index.html";
 });
 
 btnDeleteAccount.addEventListener("click", function (e) {
